@@ -1,27 +1,43 @@
-import React, { useState } from 'react'
+import React, { useReducer, useState } from 'react'
 import { useLocation } from "wouter"
 import css from "./SearchForm.module.css"
 
 const RATING = ['g', 'pg', 'pg-13', 'r']
 
+const reducer = (state, param) => {
+    return {
+        ...state,
+        keyword: param,
+        times: state.times + 1
+    }
+}
+
 
 export default function SearchForm({ initialKeyword = '', initialRating = 'g'}) {
-    const [keyword, setKeyword] = useState(decodeURIComponent(initialKeyword))
     const [rating, setRating] = useState(initialRating)
-    const [times, setTimes] = useState(0)
-    
+
+    const [state, dispatch] = useReducer(reducer, {
+        keyword: decodeURIComponent(initialKeyword),
+        times: 0
+    })
+
+    const {keyword, times} = state
+
     const [, pushLocation] = useLocation()
 
+    const updateKeyword = (keyword) => {
+        dispatch(keyword)
+    }
 
-    const handleSubmit = event => {
+
+    const handleSubmit = (event) => {
         event.preventDefault()
         // navergar a otra ruta
         pushLocation(`/search/${keyword}/${rating}`)
     }
 
-    const handleChange = event => {
-        setKeyword(event.target.value)
-        setTimes(times + 1)
+    const handleChange = (event) => {
+        updateKeyword(event.target.value)
     }
 
     const handleChangeRating = (event) => {

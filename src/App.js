@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import './App.css';
 import Home from './pages/home';
 import SearchResults from './pages/searchResults';
@@ -19,10 +19,12 @@ export default function App() {
       }
     }>
       <div className="App">
+        <Suspense fallback={null}>
         <section className="App-content">
           <Link to='/'>
-            <img className="App-logo" alt='Giffy logo'
-            src='/logo.jpeg' />
+            <figure className="App-logo">
+              <img alt='Giffy logo' src='/logo.jpeg' />
+            </figure>
           </Link>
           <GifsContextProvider>
             <Route
@@ -43,6 +45,7 @@ export default function App() {
             />
           </GifsContextProvider>
         </section>
+        </Suspense>
       </div>
     </staticContext.Provider>
   )
