@@ -23,7 +23,7 @@ export default function App() {
         <section className="App-content">
           <Link to='/'>
             <figure className="App-logo">
-              <img alt='Giffy logo' src='/logo.jpeg' />
+              <img alt='Giffy logo' src='/logo192.png' />
             </figure>
           </Link>
           <GifsContextProvider>
